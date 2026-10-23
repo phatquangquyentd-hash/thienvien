@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <base target="_top">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+  <meta name="theme-color" content="#6f1718">
+  <meta name="color-scheme" content="light">
+  <meta name="app-build" content="<?= appVersion ?>">
+  <link rel="icon" type="image/png" href="https://taitemp.shop/wp-content/uploads/2026/10/Bieu-tuong-chua-vang-va-hoa-sen.png">
+  <link rel="shortcut icon" type="image/png" href="https://taitemp.shop/wp-content/uploads/2026/10/Bieu-tuong-chua-vang-va-hoa-sen.png">
+  <link rel="apple-touch-icon" href="https://taitemp.shop/wp-content/uploads/2026/10/Bieu-tuong-chua-vang-va-hoa-sen.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700;800&family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,400,0,0" rel="stylesheet">
+  <?!= include('Stylesheet'); ?>
+</head>
+<body>
+  <div id="loading-screen" class="loading-screen" aria-live="polite">
+    <div class="loading-center">
+      <div class="loading-logo"><span class="material-symbols-rounded">temple_buddhist</span></div>
+      <div class="loading-eyebrow">QUẢN LÝ HOẠT ĐỘNG CHÙA</div>
+      <h1 id="loading-heading">Đang chuẩn bị dữ liệu</h1>
+      <p id="loading-description">Đang tải dữ liệu nghiệp vụ từ Google Sheet...</p>
+      <div class="loading-progress"><span></span></div>
+      <strong id="loading-status">Đang khởi tạo</strong>
+      <small>Upload, preview, xuất Excel và biểu đồ không tải cùng lúc với dữ liệu.</small>
+      <button id="loading-retry" class="loading-retry hidden" type="button" data-action="retry-startup">Thử lại</button>
+    </div>
+  </div>
+  <section id="login-view" class="login-view hidden" aria-label="Đăng nhập Web App">
+    <form id="login-form" class="login-card" autocomplete="on">
+      <div class="login-brand"><div class="login-brand-mark"><span class="material-symbols-rounded">temple_buddhist</span></div>
+        <div><strong>HOẠT ĐỘNG CHÙA</strong><small>HỆ THỐNG QUẢN LÝ V8</small></div></div>
+      <div class="login-eyebrow">ĐĂNG NHẬP HỆ THỐNG</div>
+      <h1>Chào mừng trở lại</h1><p>Nhập tài khoản được cấp trong tab Người dùng để tiếp tục.</p>
+      <label class="field-label" for="login-username">Tên đăng nhập</label>
+      <div class="input-with-icon"><span class="material-symbols-rounded">person</span><input id="login-username" name="username" required autocomplete="username" placeholder="Nhập tên đăng nhập"></div>
+      <div class="field-hint">Tài khoản do quản trị viên cấp.</div>
+      <label class="field-label" for="login-password">Mật khẩu</label>
+      <div class="input-with-icon"><span class="material-symbols-rounded">lock</span><input id="login-password" name="password" type="password" required autocomplete="current-password" placeholder="Nhập mật khẩu"><button id="toggle-password" type="button" class="input-icon-btn" aria-label="Hiện hoặc ẩn mật khẩu"><span class="material-symbols-rounded">visibility</span></button></div>
+      <div class="field-hint">Mật khẩu đăng nhập là mật khẩu được ghi ở tab Người dùng.</div>
+      <div id="login-error" class="login-error hidden" role="alert"></div>
+      <button id="login-submit" class="primary-login-btn" type="submit"><span>Đăng nhập</span><span class="material-symbols-rounded">arrow_forward</span></button>
+      <div class="login-secure-note"><span class="material-symbols-rounded">verified_user</span> Quyền dữ liệu được kiểm tra tại máy chủ.</div>
+      <div class="login-support">WEB APP QUẢN LÝ HOẠT ĐỘNG CHÙA · <?= appVersion ?></div>
+    </form>
+  </section>
+  <div id="app-container" class="app-container hidden">
+    <aside id="sidebar" class="sidebar">
+      <div class="brand"><div class="brand-mark"><span class="material-symbols-rounded">temple_buddhist</span></div><div class="brand-copy"><strong>HOẠT ĐỘNG CHÙA</strong><small>QUẢN LÝ TỔNG HỢP<br>PHIÊN BẢN V8</small></div></div>
+      <button id="collapse-sidebar" class="sidebar-collapse" type="button" title="Thu gọn menu"><span class="material-symbols-rounded">chevron_left</span></button>
+      <nav class="sidebar-nav" aria-label="Menu chính">
+        <div class="nav-group"><div class="nav-group-title">TỔNG QUAN</div><button class="nav-item active" data-page="dashboard"><span class="material-symbols-rounded">dashboard</span><span>Dashboard</span></button><button class="nav-item" data-page="action-center"><span class="material-symbols-rounded">notification_important</span><span>Việc cần xử lý</span><b id="nav-action-count" class="nav-count">0</b></button></div>
+        <div class="nav-group"><div class="nav-group-title">DỮ LIỆU NỀN</div><button class="nav-item" data-page="categories"><span class="material-symbols-rounded">tune</span><span>Danh mục</span></button><button class="nav-item" data-page="employees"><span class="material-symbols-rounded">groups</span><span>Nhân sự</span></button><button class="nav-item" data-page="people"><span class="material-symbols-rounded">diversity_3</span><span>Phật tử</span></button></div>
+        <div class="nav-group"><div class="nav-group-title">LỚP VÕ & HỌC PHÍ</div><button class="nav-item" data-page="classes"><span class="material-symbols-rounded">school</span><span>Nhóm lớp</span></button><button class="nav-item" data-page="memberships"><span class="material-symbols-rounded">how_to_reg</span><span>Thành viên lớp</span></button><button class="nav-item" data-page="sessions"><span class="material-symbols-rounded">event_note</span><span>Buổi sinh hoạt</span></button><button class="nav-item" data-page="attendance"><span class="material-symbols-rounded">fact_check</span><span>Điểm danh</span></button><button class="nav-item" data-page="exams"><span class="material-symbols-rounded">workspace_premium</span><span>Kỳ thi</span></button><button class="nav-item" data-page="results"><span class="material-symbols-rounded">military_tech</span><span>Kết quả thi</span></button><button class="nav-item" data-page="fees"><span class="material-symbols-rounded">payments</span><span>Khoản học phí</span></button></div>
+        <div class="nav-group"><div class="nav-group-title">NHÀ LINH</div><button class="nav-item" data-page="slots"><span class="material-symbols-rounded">grid_view</span><span>Vị trí Nhà Linh</span></button><button class="nav-item" data-page="memorials"><span class="material-symbols-rounded">temple_buddhist</span><span>Hồ sơ Nhà Linh</span></button><button class="nav-item" data-page="memorialHistory"><span class="material-symbols-rounded">history</span><span>Lịch sử Nhà Linh</span></button></div>
+        <div class="nav-group"><div class="nav-group-title">TƯ LIỆU & KỶ YẾU</div><button class="nav-item" data-page="gallery"><span class="material-symbols-rounded">collections</span><span>Thư viện & Kỷ yếu</span></button></div>
+        <div class="nav-group"><div class="nav-group-title">SỰ KIỆN & ĐIỀU HÀNH</div><button class="nav-item" data-page="events"><span class="material-symbols-rounded">event</span><span>Sự kiện</span></button><button class="nav-item" data-page="guests"><span class="material-symbols-rounded">contact_mail</span><span>Khách mời</span></button><button class="nav-item" data-page="invitations"><span class="material-symbols-rounded">mark_email_unread</span><span>Thư mời</span></button><button class="nav-item" data-page="tasks"><span class="material-symbols-rounded">task_alt</span><span>Công việc</span></button><button class="nav-item" data-page="intakes"><span class="material-symbols-rounded">support_agent</span><span>Tiếp nhận</span></button></div>
+        <div class="nav-group"><div class="nav-group-title">THU HỌC PHÍ</div><button class="nav-item" data-page="feeReceipts"><span class="material-symbols-rounded">payments</span><span>Thu học phí</span></button><button class="nav-item" data-page="feeRefunds"><span class="material-symbols-rounded">currency_exchange</span><span>Hoàn học phí</span></button></div>
+<div class="nav-group"><div class="nav-group-title">BÁN HÀNG &amp; KHO</div><button class="nav-item" data-page="stores"><span class="material-symbols-rounded">warehouse</span><span>Kho</span></button><button class="nav-item" data-page="vendors"><span class="material-symbols-rounded">factory</span><span>Nhà cung cấp</span></button><button class="nav-item" data-page="products"><span class="material-symbols-rounded">inventory_2</span><span>Sản phẩm / SKU</span></button><button class="nav-item" data-page="purchases"><span class="material-symbols-rounded">move_to_inbox</span><span>Phiếu nhập</span></button><button class="nav-item" data-page="purchaseItems"><span class="material-symbols-rounded">list_alt</span><span>Chi tiết nhập</span></button><button class="nav-item" data-page="orders"><span class="material-symbols-rounded">shopping_bag</span><span>Đơn bán</span></button><button class="nav-item" data-page="orderItems"><span class="material-symbols-rounded">receipt_long</span><span>Chi tiết bán</span></button><button class="nav-item" data-page="orderReceipts"><span class="material-symbols-rounded">payments</span><span>Thu tiền bán</span></button><button class="nav-item" data-page="returns"><span class="material-symbols-rounded">published_with_changes</span><span>Đổi trả hàng</span></button><button class="nav-item" data-page="transfers"><span class="material-symbols-rounded">swap_horiz</span><span>Chuyển kho</span></button><button class="nav-item" data-page="transferItems"><span class="material-symbols-rounded">dynamic_form</span><span>Chi tiết chuyển kho</span></button><button class="nav-item" data-page="stocktakes"><span class="material-symbols-rounded">fact_check</span><span>Kiểm kê kho</span></button><button class="nav-item" data-page="stockLedger"><span class="material-symbols-rounded">inventory</span><span>Sổ kho</span></button></div>
+<div class="nav-group"><div class="nav-group-title">VẬT TƯ &amp; TÀI SẢN</div><button class="nav-item" data-page="supplies"><span class="material-symbols-rounded">handyman</span><span>Vật tư</span></button><button class="nav-item" data-page="supplyIssues"><span class="material-symbols-rounded">construction</span><span>Xuất dùng vật tư</span></button><button class="nav-item" data-page="loans"><span class="material-symbols-rounded">handshake</span><span>Mượn trả dụng cụ</span></button><button class="nav-item" data-page="loanReturns"><span class="material-symbols-rounded">assignment_return</span><span>Lần trả dụng cụ</span></button><button class="nav-item" data-page="assets"><span class="material-symbols-rounded">devices_other</span><span>Tài sản</span></button><button class="nav-item" data-page="warranties"><span class="material-symbols-rounded">verified_user</span><span>Bảo hành tài sản</span></button><button class="nav-item" data-page="maintenance"><span class="material-symbols-rounded">build_circle</span><span>Bảo dưỡng tài sản</span></button></div>
+<div class="nav-group"><div class="nav-group-title">PHƯƠNG TIỆN &amp; GIỮ XE</div><button class="nav-item" data-page="vehicles"><span class="material-symbols-rounded">directions_car</span><span>Phương tiện</span></button><button class="nav-item" data-page="trips"><span class="material-symbols-rounded">route</span><span>Chuyến đi</span></button><button class="nav-item" data-page="parking"><span class="material-symbols-rounded">local_parking</span><span>Lượt giữ xe</span></button></div>
+<div class="nav-group"><div class="nav-group-title">TÀI CHÍNH &amp; BÁO CÁO</div><button class="nav-item" data-page="funds"><span class="material-symbols-rounded">account_balance_wallet</span><span>Quỹ</span></button><button class="nav-item" data-page="finance"><span class="material-symbols-rounded">account_balance</span><span>Giao dịch tài chính</span></button><button class="nav-item" data-page="reports"><span class="material-symbols-rounded">monitoring</span><span>Báo cáo tổng hợp</span></button></div>
+<div class="nav-group"><div class="nav-group-title">TÀI LIỆU &amp; TÁC VỤ</div><button class="nav-item" data-page="files"><span class="material-symbols-rounded">folder_copy</span><span>Tài liệu upload</span></button><button class="nav-item" data-page="emailCenter"><span class="material-symbols-rounded">mail</span><span>Quản lý Email nhắc việc</span></button><button class="nav-item" data-page="emails"><span class="material-symbols-rounded">mark_email_read</span><span>Lịch sử email</span></button><button class="nav-item" data-page="audit"><span class="material-symbols-rounded">history</span><span>Nhật ký thao tác</span></button></div>
+<div class="nav-group"><div class="nav-group-title">HỆ THỐNG</div><button class="nav-item" data-page="users"><span class="material-symbols-rounded">manage_accounts</span><span>Người dùng</span></button></div>
+      </nav>
+    </aside>
+    <div id="mobile-sidebar-overlay" class="mobile-sidebar-overlay"></div>
+    <main class="main-shell">
+      <header class="topbar"><div class="topbar-left"><button id="menu-toggle" class="icon-btn mobile-menu-btn" type="button"><span class="material-symbols-rounded">menu</span></button><div class="topbar-section-icon"><span id="topbar-icon" class="material-symbols-rounded">dashboard</span></div><div><strong id="topbar-title">Trung tâm điều hành</strong><small id="topbar-subtitle">Tổng quan hoạt động nhà chùa</small></div></div>
+        <div class="topbar-actions"><button id="user-menu-trigger" class="user-menu-trigger" type="button" data-action="user-menu"><span class="avatar" id="top-avatar">U</span><span class="user-copy"><strong id="top-user-name">Người dùng</strong><small id="top-user-role">Vai trò</small></span><span class="material-symbols-rounded">expand_more</span></button><button class="period-control" id="period-trigger" type="button"><span class="material-symbols-rounded">calendar_today</span><span><small>Kỳ đang xem</small><strong id="period-label">Tháng này</strong></span><span class="material-symbols-rounded">expand_more</span></button><button class="top-action" data-action="refresh-data" type="button"><span class="material-symbols-rounded">refresh</span><span>Làm mới</span></button><button class="icon-btn notification-btn" data-action="toggle-notifications" type="button" aria-label="Thông báo"><span class="material-symbols-rounded">notifications</span><b id="notification-count">0</b></button></div>
+      </header>
+      <section id="page-content" class="page-content"></section>
+    </main>
+  </div>
+  <div id="user-dropdown" class="floating-menu hidden"><button data-action="my-profile" type="button"><span class="material-symbols-rounded">badge</span> Thông tin tài khoản</button><button data-action="logout" type="button"><span class="material-symbols-rounded">logout</span> Đăng xuất</button></div>
+  <div id="period-menu" class="floating-menu period-menu hidden"><button data-period="this-month">Tháng này</button><button data-period="last-month">Tháng trước</button><button data-period="this-quarter">Quý này</button><button data-period="this-year">Năm nay</button><button data-action="custom-period">Khoảng ngày tùy chọn</button></div>
+  <div id="notification-popover" class="notification-popover hidden"></div>
+  <div id="v49-filter-root"></div>
+  <div id="modal-root"></div><div id="preview-root"></div><div id="confirm-root"></div><div id="toast-container" class="toast-container" aria-live="polite"></div><div id="tooltip-portal" class="tooltip-portal hidden" role="tooltip"></div>
+  <!-- Watchdog ở script riêng, không phụ thuộc vào Wizard hay Apps Script API. -->
+  <script>
+  (function(){
+    window.__CHUA_BOOT_STARTED=false;
+    window.__CHUA_BOOT_COMPLETE=false;
+    window.__CHUA_FEATURE_READY=false;
+    function safeBootError(message){
+      var loading=document.getElementById('loading-screen');
+      if(!loading||loading.classList.contains('hidden'))return;
+      var h=document.getElementById('loading-heading');
+      var status=document.getElementById('loading-status');
+      var desc=document.getElementById('loading-description');
+      var retry=document.getElementById('loading-retry');
+      if(h)h.textContent='Không thể khởi động hệ thống';
+      if(status)status.textContent=message||'JavaScript chưa khởi động';
+      if(desc)desc.textContent='Lỗi JavaScript xảy ra trước khi tải dữ liệu. Bấm Thử lại hoặc kiểm tra phiên bản mã đã triển khai.';
+      if(retry)retry.classList.remove('hidden');
+    }
+    window.addEventListener('error',function(event){
+      if(!window.__CHUA_BOOT_STARTED){
+        safeBootError((event.message||'Lỗi cú pháp JavaScript').slice(0,250));
+      }else if(!window.__CHUA_FEATURE_READY){
+        window.__CHUA_FEATURE_ERROR=String(event.message||'Lỗi module Wizard');
+      }
+    });
+    document.addEventListener('DOMContentLoaded',function(){
+      var retry=document.getElementById('loading-retry');
+      if(retry)retry.addEventListener('click',function(){
+        if(!window.__CHUA_BOOT_STARTED)window.location.reload();
+      },true);
+      setTimeout(function(){
+        if(!window.__CHUA_BOOT_STARTED)safeBootError(window.__CHUA_FEATURE_ERROR||'Core JavaScript không thể thực thi.');
+      },2500);
+    });
+  })();
+  </script>
+  <?!= include('JavaScript'); ?>
+</body>
+</html>
