@@ -20,7 +20,6 @@ async function doLogout(){const token=APP.token;try{if(token)await gas('logout',
   clearAuth();closeModal();closePreview();showLogin();
 }
 
-// LINK WEB APP API CHUẨN CỦA BẠN:
 const API_URL = 'https://script.google.com/macros/s/AKfycbz-n9ztJiJQth6rAFp6eJAG2xwGAdrFxVtn89WARzHXvsauxcZfaJrk9ggnb6W7KkK9gQ/exec';
 
 function gas(fn,...args){let opts={};if(args.length&&args[args.length-1]?.timeout)opts=args.pop();
